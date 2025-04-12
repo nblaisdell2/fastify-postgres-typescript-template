@@ -18,6 +18,6 @@ export async function getSecrets(secretName: string) {
     }
   } catch (err) {
     console.error("Failed to fetch secrets:", err);
-    throw err;
+    // throw err;
   }
 }

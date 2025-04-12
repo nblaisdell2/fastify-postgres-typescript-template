@@ -6,17 +6,21 @@ export async function getConnection(
   fastify: FastifyInstance,
   isLocal: boolean
 ) {
-  let conn = {
-    host: fastify.config.DB_HOST as string,
-    database: fastify.config.DB_DATABASE as string,
-    port: fastify.config.DB_PORT as unknown as number,
-    user: fastify.config.DB_USER as string,
-    password: fastify.config.DB_PASS as string,
-  } as any;
-
-  if (!isLocal) {
-    conn = {
-      ...conn,
+  if (isLocal) {
+    return {
+      host: process.env.DB_HOST as string,
+      database: process.env.DB_DATABASE as string,
+      port: process.env.DB_PORT as unknown as number,
+      user: process.env.DB_USER as string,
+      password: process.env.DB_PASS as string,
+    };
+  } else {
+    return {
+      host: fastify.config.DB_HOST as string,
+      database: fastify.config.DB_DATABASE as string,
+      port: fastify.config.DB_PORT as unknown as number,
+      user: fastify.config.DB_USER as string,
+      password: fastify.config.DB_PASS as string,
       // TODO: Figure out SSL issues for Production
       //       https://stackoverflow.com/questions/76899023/rds-while-connection-error-no-pg-hba-conf-entry-for-host
       ssl: {
@@ -24,8 +28,6 @@ export async function getConnection(
       },
     };
   }
-
-  return conn;
 }
 
 function getFunctionSQL(

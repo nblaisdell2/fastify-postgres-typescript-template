@@ -15,7 +15,7 @@ const IS_LOCAL = require.main === module;
 let fastifyPromise: Promise<FastifyInstance>;
 let fastify: FastifyInstance;
 
-declare module "Fastify" {
+declare module "fastify" {
   interface FastifyInstance {
     config: any;
   }
