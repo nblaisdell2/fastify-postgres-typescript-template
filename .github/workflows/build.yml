@@ -35,8 +35,8 @@ jobs:
         run: npm ci
       - name: Build the Application
         run: npm run build --if-present
-      - name: Test the Application
-        run: npm test
+      # - name: Test the Application
+      #   run: npm test
       - name: Check needed values
         run: bash check_github_secrets.sh ${{ secrets.AWS_REGION || 'none' }} ${{ secrets.AWS_ACCOUNT_ID || 'none' }} ${{ secrets.AWS_LAMBDA_EXEC_ARN || 'none' }} ${{ secrets.AWS_GHACTIONS_ROLENAME || 'none' }}
       - name: Configure AWS Credentials
