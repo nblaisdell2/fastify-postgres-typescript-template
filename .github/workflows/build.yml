@@ -44,12 +44,11 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_GHACTIONS_ROLENAME }}
           aws-region: ${{ secrets.AWS_REGION }}
-      # - name: Update AWS Secrets Manager
-      #   run: bash update_secrets.sh
-      #   shell: bash
-      #   env:
-      #     ALLMYSECRETS: ${{ toJSON(secrets) }}
-      #     SECRET_ID: ${{ secrets.SECRET_ID }}
+      - name: Create AWS Infrastructure
+        run: bash create_aws_api.sh ${{ secrets.AWS_ACCOUNT_ID }} ${{ secrets.AWS_REGION }} ${{ github.event.repository.name }} ${{ secrets.AWS_LAMBDA_EXEC_ARN }} ${{github.event.repository.clone_url }}
+        shell: bash
+        env:
+          ALLMYSECRETS: ${{ toJSON(secrets) }}
       - name: Running AWS CodeBuild
         uses: aws-actions/aws-codebuild-run-build@v1.0.12
         with:
