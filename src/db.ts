@@ -37,6 +37,7 @@ function getFunctionSQL(
   const paramList = [...Array(params.length).keys()]
     .map((v) => "$" + (v + 1))
     .join(", ");
+
   return { sql: `SELECT * FROM ${functionName}(${paramList});`, params };
 }
 
