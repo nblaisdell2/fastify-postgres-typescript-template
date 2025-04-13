@@ -1,5 +1,5 @@
 # Base image for working with AWS ECR
-FROM public.ecr.aws/lambda/nodejs:16
+FROM public.ecr.aws/lambda/nodejs:20
 
 # Set the working directory to the one
 # that the Lambda will expect our code to be in
