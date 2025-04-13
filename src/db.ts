@@ -2,10 +2,7 @@ import db from "@fastify/postgres";
 import { FastifyInstance } from "fastify";
 import { QueryResultRow } from "pg";
 
-export async function getConnection(
-  fastify: FastifyInstance,
-  isLocal: boolean
-) {
+export function getConnection(fastify: FastifyInstance, isLocal: boolean) {
   if (isLocal) {
     return {
       host: process.env.DB_HOST as string,
