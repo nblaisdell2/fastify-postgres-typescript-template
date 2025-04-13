@@ -71,7 +71,7 @@ function init(): FastifyInstance {
   fastify.addHook("onSend", async (request, reply, payload) => {});
 
   fastify.addHook("onResponse", async (request, reply: FastifyReply) => {
-    fastify.log.info("Responding: " + reply.elapsedTime);
+    fastify.log.info("Responding: " + reply.getResponseTime());
   });
 
   // Useful for custom error logging
