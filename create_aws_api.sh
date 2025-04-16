@@ -120,7 +120,6 @@ else
   echo "AWS Infrastructure already created..."
 fi
 
-
 # Get all GH Secrets, find all variables starting with "ENV_",
 # and create an object of environment variables to then
 # use in the Update Lambda Config call
