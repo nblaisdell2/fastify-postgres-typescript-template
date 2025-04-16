@@ -5,11 +5,10 @@
   "scripts": {
     "secrets": "bash update-secrets.sh",
     "prepush": "npm run secrets",
-    "push": "git add . && git commit -m '%npm_config_foo%' && git push -u origin main",
+    "push": "git add . && git commit -m '%npm_config_msg%' && git push -u origin main",
     "build": "tsc -p tsconfig.json",
     "prestart": "npm run build",
-    "start": "node dist/app.js",
-    "test": "echo '%npm_config_foo%'"
+    "start": "node dist/app.js"
   },
   "keywords": [],
   "author": "",
