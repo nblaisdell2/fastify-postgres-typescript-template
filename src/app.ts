@@ -6,7 +6,6 @@ import Fastify, {
 import db, { getConnection } from "./db";
 import { config } from "dotenv";
 import { userRoutes } from "./routes/userRoute";
-import { getSecrets } from "./secrets";
 
 config();
 
