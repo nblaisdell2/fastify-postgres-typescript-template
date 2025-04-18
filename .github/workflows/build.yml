@@ -45,4 +45,4 @@ jobs:
       - name: Running AWS CodeBuild
         uses: aws-actions/aws-codebuild-run-build@v1.0.12
         with:
-          project-name: ${{ github.event.repository.name }}
+          project-name: "fastify-ts"
