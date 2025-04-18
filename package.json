@@ -4,8 +4,6 @@
   "main": "index.js",
   "scripts": {
     "secrets": "bash update-secrets.sh",
-    "prepush": "npm run secrets",
-    "push": "echo '%npm_config_msg%' | git add . && git commit -m $1 && git push -u origin main",
     "build": "tsc -p tsconfig.json",
     "prestart": "npm run build",
     "start": "node dist/app.js"

@@ -1,6 +1,10 @@
 import { exec, query } from "../db";
-import type { User } from "../model/user";
 import type { FastifyInstance } from "fastify";
+
+export type User = {
+  id: number;
+  username: string;
+};
 
 export async function userRoutes(fastify: FastifyInstance) {
   fastify.get("/", (request, reply) => {
