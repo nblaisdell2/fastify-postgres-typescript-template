@@ -16,6 +16,8 @@ on:
 
 jobs:
   build:
+    # 👇 Skip build if commit message contains [skip ci]
+    if: ${{ github.event.head_commit.message != 'Initial commit' }}
     runs-on: ubuntu-latest
 
     strategy:
