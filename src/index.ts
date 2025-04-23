@@ -9,13 +9,16 @@
 
 import awsLambdaFastify from "@fastify/aws-lambda";
 import init from "./app";
+import { getSecrets } from "./secrets";
 
-let proxy: any; // cached Lambda handler
 exports.handler = async (event: any, context: any) => {
-  if (!proxy) {
-    const app = await init();
-    proxy = awsLambdaFastify(app);
+  const secrets = await getSecrets(process.env.SECRET_ID!);
+  for (const [key, val] of Object.entries(secrets)) {
+    process.env[key] = val as string;
   }
+
+  const app = await init();
+  const proxy = awsLambdaFastify(app);
 
   return proxy(event, context);
 };

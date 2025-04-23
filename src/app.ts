@@ -12,7 +12,6 @@ config();
 
 const IS_LOCAL = require.main === module;
 
-let fastifyPromise: Promise<FastifyInstance>;
 let fastify: FastifyInstance;
 
 declare module "fastify" {
@@ -21,141 +20,67 @@ declare module "fastify" {
   }
 }
 
-// function init(): FastifyInstance {
-//   // ================================
-//   // ==========  OPTIONS  ===========
-//   // ================================
-//   fastify = Fastify({
-//     logger: true,
-//   });
-
-//   // // ================================
-//   // // =========  DECORATORS  =========
-//   // // ================================
-//   // const secrets = await getSecrets(process.env.SECRET_ID as string);
-//   // fastify.decorate("config", secrets);
-
-//   // ================================
-//   // ==========  ROUTES  ============
-//   // ================================
-//   fastify.register(db, getConnection(fastify, IS_LOCAL));
-
-//   fastify.register(userRoutes);
-
-//   fastify.get("/ping", async (request: FastifyRequest, reply: FastifyReply) => {
-//     return "pong\n";
-//   });
-
-//   // ================================
-//   // ============ HOOKS =============
-//   // ================================
-//   fastify.addHook("onRequest", async () => {
-//     fastify.log.info("Got a request!!!");
-//   });
-
-//   fastify.addHook("preParsing", async (request, reply, payload) => {});
-
-//   // const importantKey = await generateRandomString()
-//   // request.body = { ...request.body, importantKey }
-//   fastify.addHook("preValidation", async (request, reply) => {});
-//   fastify.addHook("preHandler", async (request, reply) => {});
-
-//   fastify.addHook("preSerialization", async (request, reply, payload) => {
-//     return {
-//       data: payload,
-//       err: "",
-//       message: "Success!",
-//     };
-//   });
-
-//   fastify.addHook("onSend", async (request, reply, payload) => {});
-
-//   fastify.addHook("onResponse", async (request, reply: FastifyReply) => {
-//     fastify.log.info("Responding: " + reply.getResponseTime());
-//   });
-
-//   // Useful for custom error logging
-//   // You should not use this hook to update the error
-//   fastify.addHook("onError", async (request, reply, error) => {});
-//   fastify.addHook("onTimeout", async (request, reply) => {});
-//   fastify.addHook("onRequestAbort", async (request) => {});
-
-//   fastify.ready();
-
-//   return fastify;
-// }
-
 async function init(): Promise<FastifyInstance> {
-  if (!fastifyPromise) {
-    fastifyPromise = (async () => {
-      // ================================
-      // ==========  OPTIONS  ===========
-      // ================================
-      fastify = Fastify({
-        logger: true,
-      });
+  // ================================
+  // ==========  OPTIONS  ===========
+  // ================================
+  fastify = Fastify({
+    logger: true,
+  });
 
-      // ================================
-      // =========  DECORATORS  =========
-      // ================================
-      const secrets = await getSecrets(process.env.SECRET_ID as string);
-      fastify.decorate("config", secrets);
+  // ================================
+  // =========  DECORATORS  =========
+  // ================================
+  const secrets = await getSecrets(process.env.SECRET_ID as string);
+  fastify.decorate("config", secrets);
+  console.log(fastify.config);
 
-      // ================================
-      // ==========  ROUTES  ============
-      // ================================
-      fastify.register(db, await getConnection(fastify, IS_LOCAL));
+  // ================================
+  // ==========  ROUTES  ============
+  // ================================
+  fastify.register(db, getConnection(fastify, IS_LOCAL));
 
-      fastify.register(userRoutes);
+  fastify.register(userRoutes);
 
-      fastify.get(
-        "/ping",
-        async (request: FastifyRequest, reply: FastifyReply) => {
-          return "pong\n";
-        }
-      );
+  fastify.get("/ping", async (request: FastifyRequest, reply: FastifyReply) => {
+    return "pong\n";
+  });
 
-      // ================================
-      // ============ HOOKS =============
-      // ================================
-      fastify.addHook("onRequest", async () => {
-        fastify.log.info("Got a request!!!");
-      });
+  // ================================
+  // ============ HOOKS =============
+  // ================================
+  fastify.addHook("onRequest", async () => {
+    fastify.log.info("Got a request!!!");
+  });
 
-      fastify.addHook("preParsing", async (request, reply, payload) => {});
+  fastify.addHook("preParsing", async (request, reply, payload) => {});
 
-      // const importantKey = await generateRandomString()
-      // request.body = { ...request.body, importantKey }
-      fastify.addHook("preValidation", async (request, reply) => {});
-      fastify.addHook("preHandler", async (request, reply) => {});
+  // const importantKey = await generateRandomString()
+  // request.body = { ...request.body, importantKey }
+  fastify.addHook("preValidation", async (request, reply) => {});
+  fastify.addHook("preHandler", async (request, reply) => {});
 
-      fastify.addHook("preSerialization", async (request, reply, payload) => {
-        return {
-          data: payload,
-          err: "",
-          message: "Success!",
-        };
-      });
+  fastify.addHook("preSerialization", async (request, reply, payload) => {
+    return {
+      data: payload,
+      err: "",
+      message: "Success!",
+    };
+  });
 
-      fastify.addHook("onSend", async (request, reply, payload) => {});
+  fastify.addHook("onSend", async (request, reply, payload) => {});
 
-      fastify.addHook("onResponse", async (request, reply: FastifyReply) => {
-        fastify.log.info("Responding: " + reply.getResponseTime());
-      });
+  fastify.addHook("onResponse", async (request, reply: FastifyReply) => {
+    fastify.log.info("Responding: " + reply.getResponseTime());
+  });
 
-      // Useful for custom error logging
-      // You should not use this hook to update the error
-      fastify.addHook("onError", async (request, reply, error) => {});
-      fastify.addHook("onTimeout", async (request, reply) => {});
-      fastify.addHook("onRequestAbort", async (request) => {});
+  // Useful for custom error logging
+  // You should not use this hook to update the error
+  fastify.addHook("onError", async (request, reply, error) => {});
+  fastify.addHook("onTimeout", async (request, reply) => {});
+  fastify.addHook("onRequestAbort", async (request) => {});
 
-      await fastify.ready();
-
-      return fastify;
-    })();
-  }
-
-  return fastifyPromise;
+  return fastify;
 }
 
 ["SIGINT", "SIGTERM"].forEach((signal) => {
